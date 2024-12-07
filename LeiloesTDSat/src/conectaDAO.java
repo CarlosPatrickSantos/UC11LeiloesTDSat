@@ -16,18 +16,45 @@ import javax.swing.JOptionPane;
  * @author Adm
  */
 public class conectaDAO {
+     private static Connection conn;
+       private static final String url = "jdbc:mysql://localhost:3306/uc11?useSSL=false";
+       private static final String user = "root";
+       private static final String password = "katarina7";
     
-    public Connection connectDB(){
-        Connection conn = null;
+       public static boolean conectarDB(){
+      
         
         try {
-        
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/uc11?user=root&password=");
+        //Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Conexão realizada com sucesso");
+            return true;
             
-        } catch (SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("Falha na conexão com o banco: " + ex.getMessage());
+            return false;
+        }
+       }
+        public static Connection getConnection() {
+        if (conn == null) {
+            conectarDB(); // Tenta conectar se a conexão estiver nula
         }
         return conn;
     }
+
+    public static void desconectar() {
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+                System.out.println("Conexão fechada com sucesso");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar a conexão: " + ex.getMessage());
+            // Podemos deixar vazio para evitar uma mensagem de erro desnecessária ao usuário
+        }
+    }
+}  
+        
     
-}
+    
+
