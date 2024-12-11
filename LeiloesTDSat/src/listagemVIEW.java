@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -19,6 +20,9 @@ public class listagemVIEW extends javax.swing.JFrame {
     public listagemVIEW() {
         initComponents();
         listarProdutos();
+       
+        
+        
     }
 
     /**
@@ -140,8 +144,18 @@ public class listagemVIEW extends javax.swing.JFrame {
         
         ProdutosDAO produtosdao = new ProdutosDAO();
         
-        //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        if (!id.isEmpty()) {
+             try { 
+                 produtosdao.venderProduto(Integer.parseInt(id));
+                 listarProdutos(); // Atualiza a listagem dos produtos
+                 //carregarProdutosVendidos(); // Atualiza a lista de produtos vendidos
+                 JOptionPane.showMessageDialog(this, "Produto vendido com sucesso!");
+            } catch (NumberFormatException e) {
+                 JOptionPane.showMessageDialog(this, "ID inválido. Por favor, insira um número válido.");
+             }
+                  } else { JOptionPane.showMessageDialog(this, "Por favor, insira o ID do produto."); 
+             }
+       
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
@@ -153,6 +167,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
+  
     /**
      * @param args the command line arguments
      */

@@ -32,7 +32,7 @@ public class VendasVIEW extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableVendas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -40,7 +40,7 @@ public class VendasVIEW extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Lista de Produtos Vendidos");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -51,7 +51,7 @@ public class VendasVIEW extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableVendas);
 
         jButton1.setText("VOLTAR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +96,23 @@ public class VendasVIEW extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+private void carregarProdutosVendidos() {
+            ProdutosDAO dao = new ProdutosDAO();
+            ArrayList<ProdutosDTO> lista = dao.listarProdutosVendidos();
+            DefaultTableModel model = (DefaultTableModel) jTableVendas.getModel();
+            model.setRowCount(0); // Limpar tabela
+
+            for (ProdutosDTO produto : lista) {
+
+                 model.addRow(new Object[]{ 
+                 produto.getId(), 
+                 produto.getNome(), 
+                 produto.getValor(), 
+                 produto.getStatus() });
+                 
+}
+            
+}
 
     /**
      * @param args the command line arguments
@@ -131,32 +148,14 @@ public class VendasVIEW extends javax.swing.JFrame {
             }
         });
     }
-        
-        private void carregarProdutosVendidos() {
-            ProdutosDAO dao = new ProdutosDAO();
-            ArrayList<ProdutosDTO> lista = dao.listarProdutosVendidos();
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0); // Limpar tabela
-
-            for (ProdutosDTO produto : lista) {
-
-                 model.addRow(new Object[]{ 
-                 produto.getId(), 
-                 produto.getNome(), 
-                 produto.getValor(), 
-                 produto.getStatus() });
-                 
-}
-            
-
-
-}
+      
+       
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableVendas;
     // End of variables declaration//GEN-END:variables
 }
