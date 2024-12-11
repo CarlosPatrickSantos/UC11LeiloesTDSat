@@ -10,7 +10,6 @@
 
 import java.sql.PreparedStatement;
 import java.sql.Connection;
-import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,6 +45,20 @@ public class ProdutosDAO {
         //conn = new conectaDAO().connectDB();
         
         
+    }
+    
+    public void venderProduto(int id) {
+        String sql = "UPDATE produtos Set status = 'Vendido' WHERE id = ?";
+        
+        try {
+           
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,id);
+            stmt.executeUpdate();
+            stmt.close();
+          }catch (SQLException e) {
+              e.printStackTrace();
+          }
     }
     
     public ArrayList<ProdutosDTO> listarProdutos(){
